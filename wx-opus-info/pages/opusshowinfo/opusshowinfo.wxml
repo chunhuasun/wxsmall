@@ -1,0 +1,145 @@
+<!--pages/timerecord/timerecord.wxml-->
+<import src="../../components/gallery/gallery.wxml" />
+<import src="../../components/dialog/dialog.wxml" />
+<import src="../../components/toptips/toptips.wxml" />
+
+<template is="dialog" data="{{ ...$wux.dialog }}" />
+<template is="gallery" data="{{ ...$wux.gallery }}" />
+<template is="toptips" data="{{ ...$wux.toptips }}" />
+
+<view>
+  <loading hidden="{{loadhidden}}"> 上传中... </loading>
+</view>
+
+<view class="page"> 
+  <view class="page__bd">
+    <!--   opusauthor: '绘画人信息', opusdate: '作品日期', opusdepict: '作品信息', opustype: '艺术分类' -->
+    <block wx:for="{{opusinfo}}" wx:for-item="opus" wx:key="objectId">
+      <view class="list-image">
+        <image src="{{opus.opusurl}}" class="item-image" mode="widthFix"></image>
+      </view>
+
+      <view class="list-cloumn">
+        <text class="cloumn-text__text  ">
+          标题：
+      </text>
+        <view class="cloumn-text__Info">{{opus.opustitle}}</view>
+        <!-- <input class="cloumn-text__Info " data-id="{{opus.objectId}}" data-item="opustitle" bindinput="bindInputOpus" value="{{opus.opustitle}}" /> -->
+      </view>
+
+      <view class="list-cloumn">
+        <text class="cloumn-text__text  ">
+         作者：
+      </text>
+        <view class="cloumn-text__Info">{{opus.opusauthor}}</view>
+        <!-- <input class="cloumn-text__Info " data-id="{{opus.objectId}}" data-item="opusauthor" bindinput="bindInputOpus" value="{{opus.opusauthor}}" /> -->
+      </view>
+ 
+      <view class="list-cloumn">
+        <text class="cloumn-text__text  ">
+          日期：
+      </text>
+      
+      <view class="cloumn-text__Info">{{opus.opusdate}}</view>
+        <!-- <view class=" weui-select__date">
+          <picker mode="date" data-id="{{opus.objectId}}" data-item="opusdate" value="{{opus.opusdate}}" bindchange="bindInputOpus">
+            <view class="weui-select">{{opus.opusdate}}</view>
+          </picker>
+        </view> -->
+      </view>
+ 
+
+      <view class="weui-cells__title">作品描述</view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell">
+          <view class="weui-article__p">{{opus.opusdepict}}</view>
+        </view>
+      </view>
+ 
+      <!-- <view class="weui-cell__genre" bindtap="setModalStatus" data-status="1">
+        <view class="weui-cells__title">艺术分类</view>
+        <view class="weui-cells__titletype"> 
+        </view> 
+      </view> -->
+    </block>
+ 
+
+    <view class="weui-btn-area">
+      <button class="weui-btn " type="primary" size="mini" bindtap="bindDeleteOpus" data-status="1">删除</button>
+      <button class="weui-btn btn-space-one" type="primary" size="mini" bindtap="setModalStatus" data-status="1">留言</button>
+    </view>
+
+    <!-- <view class="container" >  -->
+      <block wx:for="{{todos}}" wx:for-item="todo" wx:key="objectId"> 
+        <view class="nav-view">
+          <view class="left-item">
+            <image src="{{todo.taskIcon}}" class="item-image__com"></image>
+          </view>
+          <view class="item-info-view">
+            <view>
+              <view class="item-title">{{todo.content}}</view>
+            </view>
+            <view bindtap="bindtaskdelete" data-stamp="{{todo.pubStamp}}" data-type="killpublish" data-info="{{todo.publishinfo}}" >
+              <text class="weui-article__p">{{todo.publishinfo}}</text>
+            </view>
+            <view>
+              <button class="but-pl-css " type="primary" data-id="{{todo.objectId}}" data-reqid = "{{todo.reqItemTimeId}}" bindtap="setplModalStatus" data-status="1">评论</button>
+            </view>
+            <view class="add-back-ground">
+              <!-- <text class="item-title" bindtap="bindtaskdelete" >{{todo.addtask}}</text> -->
+              <block wx:for="{{todo.addtask}}" wx:for-item="task" wx:key="taskStamp">
+              <view bindtap="bindtaskdelete" data-stamp="{{task.taskStamp}}" data-type="killtask" data-info="{{task.taskinfo}}" >
+                  <text class="item-title">{{task.taskinfo}}</text>
+                  </view>
+              </block>  
+            </view>
+          </view>
+        </view> 
+      </block>  
+   <!-- </view>  -->
+
+  </view>
+</view>
+
+<view class="drawer_screen" bindtap="setModalStatus" data-status="0" wx:if="{{showModalStatus}}"></view>
+<view animation="{{animationData}}" class="drawer_attr_box" wx:if="{{showModalStatus}}">
+  <view class="drawer_attr_content">
+    <view class="weui-tab">
+      <view class="nav-view">
+        <view class="item-info-view add-width">
+          <view>
+            <view class="weui-article__p add-border">我来留个言</view>
+          </view>
+          <view>
+            <textarea class="weui-article__p add-border" focus="{{ly_focus}}" maxlength="-1" bindinput="bindInputInfoly" value='{{inputinfoly}}'> </textarea>
+          </view>
+        </view>
+      </view>
+      <button class="weui-btn btn-space" type="primary" size="mini" bindtap="addinfoendly">留言</button>
+    </view>
+  </view>
+</view>
+
+<view class="drawer_screen" bindtap="setplModalStatus" data-status="0" wx:if="{{showplModalStatus}}"></view>
+<view animation="{{planimationData}}" class="drawer_attr_box" wx:if="{{showplModalStatus}}">
+  <view class="drawer_attr_content_pl">
+    <view class="weui-tab">
+      <view class="nav-view">
+        <view class="item-info-view add-width">
+          <view>
+            <view class="weui-article__p add-border">我来评两句</view>
+          </view>
+          <view>
+            <textarea class="weui-article__p add-border" focus="{{pl_focus}}" maxlength="-1" bindinput="bindInputInfopl" value='{{inputinfopl}}'></textarea>
+          </view>
+        </view>
+      </view>
+      <button class="weui-btn btn-space" type="primary" size="mini" bindtap="addinfoendpl">评论</button>
+    </view>
+  </view>
+</view>
+
+
+
+<audio src="{{audioSrc}}" id="myAudio" action="{{action}}" bindended="audioended">
+</audio>

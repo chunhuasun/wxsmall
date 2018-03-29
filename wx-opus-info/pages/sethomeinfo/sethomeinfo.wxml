@@ -1,0 +1,100 @@
+<import src="../../components/gallery/gallery.wxml" />
+
+<view>
+  <loading hidden="{{hidden}}"> 加载中... </loading>
+</view>
+
+<template is="gallery" data="{{ ...$wux.gallery }}" />
+<!-- <view class="PicBg">
+    <image src="{{bg}}" />
+</view> -->
+
+
+<!-- <view class="userinfo view-flex">
+    <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+    <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+  </view>
+  <view class="header-content view-flex">
+    <view class="view-center">
+      <view class="header-content view-flex">
+        <text class="header-content">{{dayinfo}}</text>
+      </view>
+      <view class="header-content view-flex">
+        <text class="header-content">{{weekinfo}}</text>
+      </view>
+    </view>
+  </view> -->
+
+<view class="header-h22">
+  <swiper indicator-dots="true" class="swiper-box" style="height:{{swiperboxheight}}px" bindchange="changeSwiper" circular="true">
+    <block wx:for="{{opusArr}}" wx:key="timeStamp">
+      <swiper-item>
+        <image mode="{{arraymode[modeindex]}}" src="{{item.opusurl}}" style="width:100%;height:{{boximageheight}}px" />
+      </swiper-item>
+    </block>
+  </swiper>
+</view>
+
+<view class="example">
+  <view class="marquee_box">
+    <view class="marquee_text" style="{{orientation}}:{{marqueeDistance2}}px;font-size: {{size}}px;">
+      <text>{{messageinfo}}</text>
+      <!-- <text wx:if="{{marquee2copy_status}}" style="margin-left:{{marquee2_margin}}px;">{{messageinfo}}</text> -->
+    </view>
+  </view>
+</view>
+
+<view class="body-list">
+  <view class="weui-cells__title add_border_top">提示内容</view>
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell__bd">
+      <textarea class="weui-textarea" data-item="baseinfo" bindinput="bindInputOpus" maxlength='-1' value='{{baseinfo}}'></textarea>
+    </view>
+  </view>
+
+  <view class="list-cloumn">
+    <text class="cloumn-text__text  ">
+         图片高度(参考宽度)占比%：
+      </text>
+    <input class="cloumn-text__Info " data-item="heightscale" bindinput="bindInputOpus" value="{{heightscale}}" />
+  </view>
+
+  <view class="list-cloumn">
+    <text class="cloumn-text__text  ">
+         图片缩放模式：
+      </text>
+    <view class=" cloumn-text__Info">
+      <picker bindchange="bindchangemode" value="{{modeindex}}" range="{{arraymode}}">
+        <view class="weui-select">{{arraymode[modeindex]}}</view>
+      </picker>
+     </view>
+  </view>
+
+  <view class="weui-cells__title">选择图片</view>
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell">
+      <view class="weui-cell__bd">
+        <view class="weui-uploader">
+          <view class="weui-uploader__bd">
+            <view class="weui-uploader__files">
+              <block wx:for-items="{{ saveimageurls }}" wx:key="{{ index }}">
+                <view class="weui-uploader__file" bindtap="showGallery" data-current="{{ index }}">
+                  <image class="weui-uploader__img" src="{{ item.url }}" mode="aspectFill" />
+                  <icon wx:if="{{item.icon=='icon'}}" class="weui-uploader__icon" type="success_no_circle" size="40"/>
+                </view>
+              </block>
+            </view>
+            <view class="weui-uploader__input-box">
+              <view class="weui-uploader__input" bindtap="chooseImage"></view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="weui-btn-area">
+    <button class="weui-btn btn-space" type="primary" size="mini" bindtap="bindsetinfo" disabled="{{begdisfalg}}">保存设置</button>
+  </view>
+
+</view>

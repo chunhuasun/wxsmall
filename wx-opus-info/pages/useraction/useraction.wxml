@@ -1,0 +1,18 @@
+<!--pages/publishinfo/publishinfo.wxml-->
+
+<view class="body-list">
+      <block wx:for="{{todos}}" wx:for-item="todo" wx:key="objectId">
+        <view class="nav-view">
+            <view>
+              <view class="item-title">{{todo.reoperDate}}</view>
+            </view>
+            <view>
+              <text class="weui-article__p">type :  {{todo.regetType}}</text>
+            </view>
+            <view>
+              <text class="weui-article__p">op :  {{todo.refunOpType}}</text>
+            </view>
+        </view>
+      </block>
+</view>
+ 

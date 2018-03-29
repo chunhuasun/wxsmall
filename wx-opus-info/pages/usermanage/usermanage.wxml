@@ -1,0 +1,39 @@
+<!--pages/publishinfo/publishinfo.wxml-->
+
+<view>
+  <loading hidden="{{loadhidden}}"> 上传中... </loading>
+</view>
+
+<view class="body-list">
+  <view class="container" >
+     
+    <scroll-view scroll-y class="weui-tab__content">
+      <block wx:for="{{todos}}" wx:for-item="todo" wx:key="objectId">
+        <!-- <navigator url="{{todo.url}}" class="nav-view" hover-class="navigator-hover"> -->
+        <view class="nav-view">
+          <view class="left-item">
+            <image src="{{todo.taskIcon}}" class="item-image"></image>
+          </view>
+          <view class="item-info-view">
+            <view>
+              <view class="item-title">{{todo.content}}</view>
+            </view>
+            <view data-id="{{todo.objectId}}" bindtap="queaction" >
+              <text class="weui-article__p">{{todo.publishinfo}}</text>
+            </view>
+            <view>
+              <button class="but-pl-css " type="primary" data-id="{{todo.objectId}}" bindtap="setlvl" data-status="Lvl0">普通用户</button>
+              <button class="but-pl-css " type="primary" data-id="{{todo.objectId}}" bindtap="setlvl" data-status="Lvl1">一级用户</button>
+              <button class="but-pl-css " type="primary" data-id="{{todo.objectId}}" bindtap="setlvl" data-status="Lvl2">二级用户</button>
+              <button class="but-pl-css " type="primary" data-id="{{todo.objectId}}" bindtap="setallow" data-status="notallow">禁言</button>
+              <button class="but-pl-css " type="primary" data-id="{{todo.objectId}}" bindtap="setallow" data-status="allow">解禁</button>
+            </view>
+          </view>
+        </view>
+        <!-- </navigator> -->
+      </block>
+    </scroll-view>
+
+   </view> 
+
+</view>

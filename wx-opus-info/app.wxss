@@ -1,0 +1,22 @@
+/**app.wxss**/
+@import 'components/wux.wxss';
+@import 'uistyles/weui.wxss';
+@import 'uistyles/skyvow.wxss';
+
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 200rpx 0;
+  box-sizing: border-box;
+} 
+
+text{
+  font-size:34rpx;
+}
+
+page {
+  background-color: #f0f0f0;
+}

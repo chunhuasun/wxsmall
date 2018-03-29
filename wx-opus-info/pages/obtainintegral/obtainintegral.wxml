@@ -1,0 +1,59 @@
+<view>
+  <loading hidden="{{hidden}}"> 加载中... </loading>
+</view>
+
+<view class="PicBg" style="height:{{picbgheight}}px">
+  <image src="{{bg}}" />
+</view>
+
+
+<!-- <view class="userinfo view-flex">
+    <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+    <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+  </view>
+  <view class="header-content view-flex">
+    <view class="view-center">
+      <view class="header-content view-flex">
+        <text class="header-content">{{dayinfo}}</text>
+      </view>
+      <view class="header-content view-flex">
+        <text class="header-content">{{weekinfo}}</text>
+      </view>
+    </view>
+  </view> -->
+<view id='mypage'>
+
+  <view class="header-h22">
+    <swiper indicator-dots="true" class="swiper-box" style="height:{{swiperboxheight}}px" bindchange="changeSwiper" autoplay="true" interval="3000" circular="true">
+      <block wx:for="{{opusArr}}" wx:key="timeStamp">
+        <swiper-item>
+          <image mode="{{imagemode}}" src="{{item.opusurl}}" style="width:100%;height:{{boximageheight}}px" />
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+
+  <view class="example">
+    <view class="marquee_box">
+      <view class="marquee_text" style="{{orientation}}:{{marqueeDistance2}}px;font-size: {{size}}px;">
+        <text>{{messageinfo}}</text>
+        <!-- <text wx:if="{{marquee2copy_status}}" style="margin-left:{{marquee2_margin}}px;">{{messageinfo}}</text> -->
+      </view>
+    </view>
+  </view>
+
+  <view class="body-list">
+    <block wx:for="{{todos}}" wx:for-item="todo" wx:key="objectId">
+      <view class="swiper-item">
+        <navigator url="{{todo.url}}" class="nav-view22" hover-class="navigator-hover">
+          <view class="view-image-border">
+            <!-- <image src="{{todo.taskIcon}}" class="item-image"></image> -->
+            <image src="{{todo.taskIcon}}" mode="widthFix" class="item-image"></image>
+
+            <text class="Mess1">{{todo.content}}</text>
+          </view>
+        </navigator>
+      </view>
+    </block>
+  </view>
+</view>

@@ -1,0 +1,137 @@
+<!--pages/timerecord/timerecord.wxml-->
+<import src="../../components/gallery/gallery.wxml" />
+<import src="../../components/dialog/dialog.wxml" />
+<import src="../../components/toptips/toptips.wxml" />
+
+<template is="dialog" data="{{ ...$wux.dialog }}" />
+<template is="gallery" data="{{ ...$wux.gallery }}" />
+<template is="toptips" data="{{ ...$wux.toptips }}" />
+
+<view>
+  <loading hidden="{{loadhidden}}"> 上传中... </loading>
+</view>
+
+<view class="page">
+  <view class="page__bd" wx:if="{{imagechooseflag}}">
+    <view class="weui-cells__title">选择作品</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell">
+        <view class="weui-cell__bd">
+          <view class="weui-uploader">
+            <view class="weui-uploader__bd">
+              <view class="weui-uploader__files">
+                <block wx:for-items="{{ saveimageurls }}" wx:key="{{ index }}">
+                  <view class="weui-uploader__file" bindtap="showGallery" data-current="{{ index }}">
+                    <image class="weui-uploader__img" src="{{ item.url }}" mode="aspectFill" />
+                    <icon wx:if="{{item.icon=='icon'}}" class="weui-uploader__icon" type="success_no_circle" size="40"/>
+                  </view>
+                </block>
+              </view>
+              <view class="weui-uploader__input-box">
+                <view class="weui-uploader__input" bindtap="chooseImage"></view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="weui-btn-area">
+      <button class="weui-btn btn-space" type="primary" size="mini" bindtap="bindimagesave" disabled="{{begdisfalg}}">上传作品</button>
+    </view>
+  </view>
+
+  <view class="page__bd" wx:if="{{!imagechooseflag}}">
+
+    <!--   opusauthor: '绘画人信息', opusdate: '作品日期', opusdepict: '作品信息', opustype: '艺术分类' -->
+    <block wx:for="{{opusinfo}}" wx:for-item="opus" wx:key="objectId">
+      <view class="list-image">
+        <image src="{{opus.opusurl}}" class="item-image" mode="widthFix"></image>
+      </view>
+
+      <view class="list-cloumn">
+        <text class="cloumn-text__text  ">
+          标题：
+      </text>
+        <input class="cloumn-text__Info " data-id="{{opus.objectId}}" data-item="opustitle" bindinput="bindInputOpus" value="{{opus.opustitle}}" />
+      </view>
+
+      <view class="list-cloumn">
+        <text class="cloumn-text__text  ">
+         作者：
+      </text>
+        <input class="cloumn-text__Info " data-id="{{opus.objectId}}" data-item="opusauthor" bindinput="bindInputOpus" value="{{opus.opusauthor}}" />
+      </view>
+
+      <view class="list-cloumn">
+        <text class="cloumn-text__text  ">
+          日期：
+      </text>
+        <view class=" weui-select__date">
+          <picker mode="date" data-id="{{opus.objectId}}" data-item="opusdate" value="{{opus.opusdate}}" bindchange="bindInputOpus">
+            <view class="weui-select">{{opus.opusdate}}</view>
+          </picker>
+        </view>
+      </view>
+
+
+      <view class="weui-cells__title">作品描述</view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell" hidden="{{showModalStatus}}" wx:if="{{iteminfoinput}}">
+          <view class="weui-cell__bd">
+            <textarea class="weui-textarea" data-id="{{opus.objectId}}" data-item="opusdepict" bindinput="bindInputOpus" maxlength='-1' value='{{opus.opusdepict}}'></textarea>
+          </view>
+        </view>
+        <view class="weui-cell" hidden="{{showModalStatus}}" wx:if="{{!iteminfoinput}}">
+          <view class="weui-article__p">{{opus.opusdepict}}</view>
+        </view>
+      </view>
+      <!-- <view class="weui-cell__genre" bindtap="setModalStatus" data-status="1">
+        <view class="weui-cells__title">艺术分类</view>
+        <view class="weui-cells__titletype"> 
+        </view> 
+      </view> -->
+    </block>
+
+    <view class="weui-btn-area">
+      <button class="weui-btn btn-space" type="primary" size="mini" bindtap="bindtapappear" disabled="{{enddisfalg}}">发表作品</button>
+    </view>
+  </view>
+</view>
+
+<view class="drawer_screen" bindtap="setModalStatus" data-status="0" wx:if="{{showModalStatus}}"></view>
+<view animation="{{animationData}}" class="drawer_attr_box" wx:if="{{showModalStatus}}">
+  <view class="drawer_attr_content">
+    <view class="weui-tab">
+      <view class="weui-navbar">
+        <block wx:for-items="{{titletabs}}" wx:key="{{index}}">
+          <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
+            <view class="weui-navbar__title">{{item}}</view>
+          </view>
+        </block>
+        <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+      </view>
+      <view class="weui-tab__panel">
+        <scroll-view scroll-y class="weui-tab__content" hidden="{{activeIndex != 0}}">
+          <block wx:for-items="{{xxitemtitles}}" wx:key="{{index}}">
+            <button data-name="{{item}}" class="weui-tab__conbut" size="mini" bindtap="setitemtitle">{{item}}</button>
+          </block>
+        </scroll-view>
+        <scroll-view scroll-y class="weui-tab__content" hidden="{{activeIndex != 1}}">
+          <block wx:for-items="{{shitemtitles}}" wx:key="{{index}}">
+            <button data-name="{{item}}" class="weui-tab__conbut" size="mini" bindtap="setitemtitle">{{item}}</button>
+          </block>
+        </scroll-view>
+        <scroll-view scroll-y class="weui-tab__content" hidden="{{activeIndex != 2}}">
+          <block wx:for-items="{{ylitemtitles}}" wx:key="{{index}}">
+            <button data-name="{{item}}" class="weui-tab__conbut" size="mini" bindtap="setitemtitle">{{item}}</button>
+          </block>
+        </scroll-view>
+
+      </view>
+      <view class="btn open_btn" bindtap="additem">新增分类</view>
+    </view>
+  </view>
+</view>
+<audio src="{{audioSrc}}" id="myAudio" action="{{action}}" bindended="audioended">
+</audio>

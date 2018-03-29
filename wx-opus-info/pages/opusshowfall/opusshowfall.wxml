@@ -1,0 +1,31 @@
+<!--pages/components/waterfall/waterfall.wxml-->
+
+<view class="weui-search-bar">
+    <view class="weui-search-bar__form">
+      <view class="weui-search-bar__box">
+        <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+        <input type="text" class="weui-search-bar__input" placeholder="搜索" value="{{inputVal}}" focus="{{inputShowed}}" bindconfirm="inputSearch" />
+        <view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
+          <icon type="clear" size="14"></icon>
+        </view>
+      </view>
+      <label class="weui-search-bar__label" hidden="{{inputShowed}}" bindtap="showInput">
+        <icon class="weui-icon-search" type="search" size="14"></icon>
+        <view class="weui-search-bar__text">搜索</view>
+      </label>
+    </view>
+    <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" bindtap="hideInput">取消</view>
+  </view>
+
+<view>
+    <navigator url='../opusshowinfo/opusshowinfo?pages=opusshowinfo&timestamp={{item.timestamp}}&opusid={{item.objectId}}' wx:for="{{list}}" wx:key="{{item.objectId}}">
+         <!-- <view class="img_box" style="top:{{item.top}}px;left:{{item.left}}px">  -->
+         <view class="img_box" style="margin-top:{{item.top}}px;left:{{item.left}}px;width:{{item.width}}%;">  
+            <image src="{{item.url}}" mode="widthFix" bindload="loadImage" data-index="{{index}}"></image>
+            <view class="item_desc" style="height:{{descHeight}}px">{{item.name}}</view>
+        </view>
+    </navigator>
+</view>
+<view class="loading_box" wx:if="{{pageStatus}}" style="top:{{(nextshowtoplef>nextshowtoprig?nextshowtoplef:nextshowtoprig)+20}}px">
+    <view class="loading_fade_circle"></view>
+</view>

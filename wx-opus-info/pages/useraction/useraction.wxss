@@ -1,0 +1,25 @@
+/* pages/useraction/useraction.wxss */
+.body-list {
+  padding: 4px 6px 48px;
+}
+.nav-view {
+  background-color: white;
+  padding: 10px 15px;
+  position: relative;
+  /* display: flex; */
+  /* align-items: center; */
+  content: " ";
+  left: 0;
+  top: 0;
+  right: 0;
+  border-top: 1rpx solid #d9d9d9;
+  color: #d9d9d9;
+}
+.item-title {
+  font-size: 26rpx;
+  color: black;
+}
+.weui-article__p {
+  font-size: 34rpx;
+  color: black;
+}

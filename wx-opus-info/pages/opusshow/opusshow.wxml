@@ -1,0 +1,88 @@
+<!--pages/timetraveler/timetraveler.wxml-->
+<import src="../../components/button/button.wxml" />
+<template is="button" data="{{ ...$wux.button.br }}" />
+
+<!--  
+<view class="header-view header-info">
+  <view class="header-view__put">
+    <input placeholder="{{planName}}" disabled />
+  </view>
+    <view class="header-view__pic">
+    <picker mode="date" value="{{showdate}}" start="2015-09-01" end="{{showdateend}}" bindchange="bindDateChange">
+      <view class="weui-input">{{showdate}}</view>
+    </picker>
+   </view>
+</view> -->
+
+<view class="page">
+  <view class="page__bd">
+    <view class="weui-search-bar">
+      <view class="weui-search-bar__form">
+        <view class="weui-search-bar__box">
+          <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+          <input type="text" class="weui-search-bar__input" placeholder="搜索" value="{{inputVal}}" focus="{{inputShowed}}" bindconfirm="inputSearch" />
+          <view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
+            <icon type="clear" size="14"></icon>
+          </view>
+        </view>
+        <label class="weui-search-bar__label" hidden="{{inputShowed}}" bindtap="showInput">
+          <icon class="weui-icon-search" type="search" size="14"></icon>
+          <view class="weui-search-bar__text">搜索</view>
+        </label>
+      </view>
+      <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" bindtap="hideInput">取消</view>
+    </view>
+
+
+
+    <view class="mod_switch">
+      <view class="items">
+        <view class="item {{ type === 'grid' ? 'current' : '' }}" data-type="grid" bindtap="modSwitch">
+          <view class="ico_grid">
+            <image wx:if="{{ type === 'table' }}" class="ico_img" src="../../images/working/iconfont-grid.png" />
+            <image wx:if="{{ type === 'grid' }}" class="ico_img" src="../../images/working/iconfont-grid-active.png" />
+          </view>
+          <text class="text">图片视图</text>
+        </view>
+        <view class="item {{ type === 'table' ? 'current' : '' }}" data-type="table" bindtap="modSwitch">
+          <view class="ico_list">
+            <image wx:if="{{ type === 'grid' }}" class="ico_img" src="../../images/working/iconfont-list.png" />
+            <image wx:if="{{ type === 'table' }}" class="ico_img" src="../../images/working/iconfont-list-active.png" />
+          </view>
+          <text class="text">列表视图</text>
+        </view>
+      </view>
+    </view>
+
+
+
+
+
+    <view class="body-list">
+      <view class="weui-cells weui-cells_after-title" wx:if="{{ type === 'table' }}">
+        <block wx:for="{{todos}}" wx:for-item="todo" wx:key="objectId">
+          <view class="list-cloumn" animation="{{todo.animationData}}" ontap="jumpToPage" data-id="{{todo.objectId}}" data-timestamp="{{todo.timestamp}}">
+            <text data-id="{{todo.objectId}}" data-name="{{todo.content}}"  data-timestamp="{{todo.timestamp}}" class="cloumn-text tappable ">
+      {{todo.content}}
+      </text>
+          </view>
+          <view class="view-line1">
+          </view>
+        </block>
+      </view>
+      <view class="grids grids-small" wx:if="{{ type === 'grid' }}">
+        <block wx:for="{{todos}}" wx:for-item="todo" wx:key="objectId">
+          <view class="list-image" animation="{{todo.animationData}}" ontap="jumpToPage" data-id="{{todo.objectId}}" data-timestamp="{{todo.timestamp}}">
+            <!-- <view class="list-image"> -->
+              <image src="{{todo.opusurl}}" class="item-image" data-id="{{todo.objectId}}" data-timestamp="{{todo.timestamp}}" mode="widthFix"></image>
+            <!-- </view> -->
+
+          </view>
+          <view class="view-line1">
+          </view>
+        </block>
+      </view>
+    </view>
+
+  </view>
+</view>
